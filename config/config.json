@@ -1,0 +1,9 @@
+{
+    "server": {
+        "env": "dev",
+        "port": 5000
+    },
+    "application": {
+        "name": "chat-app"
+    }
+}
