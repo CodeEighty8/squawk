@@ -1,4 +1,4 @@
-module chat-server
+module squawk
 
 go 1.21.5
 

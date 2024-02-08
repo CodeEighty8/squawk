@@ -1,12 +1,12 @@
 package main
 
 import (
-	"chat-server/config"
-	"chat-server/internal/controller"
-	"chat-server/internal/helpers"
-	"chat-server/internal/service"
-	"chat-server/server"
 	"log"
+	"squawk/config"
+	"squawk/internal/controller"
+	"squawk/internal/helpers"
+	"squawk/internal/service"
+	"squawk/server"
 )
 
 func main() {

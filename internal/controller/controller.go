@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"chat-server/internal/service"
-	"chat-server/server"
 	"net/http"
+	"squawk/internal/service"
+	"squawk/server"
 
 	"github.com/go-chi/chi/v5"
 )

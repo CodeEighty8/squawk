@@ -1,9 +1,9 @@
 package helpers
 
 import (
-	"chat-server/internal/models"
 	"log"
 	"net/http"
+	"squawk/internal/models"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"

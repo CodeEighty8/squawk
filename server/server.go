@@ -1,10 +1,10 @@
 package server
 
 import (
-	"chat-server/config"
 	"fmt"
 	"log"
 	"net/http"
+	"squawk/config"
 
 	"github.com/go-chi/chi/v5"
 )

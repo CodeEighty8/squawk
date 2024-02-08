@@ -1,8 +1,8 @@
 package service
 
 import (
-	"chat-server/internal/helpers"
 	"net/http"
+	"squawk/internal/helpers"
 )
 
 type IChatService interface {

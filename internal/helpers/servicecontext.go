@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"chat-server/config"
+	"squawk/config"
 )
 
 type DI struct {

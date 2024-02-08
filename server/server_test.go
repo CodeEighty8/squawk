@@ -1,7 +1,7 @@
 package server
 
 import (
-	"chat-server/config"
+	"squawk/config"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
