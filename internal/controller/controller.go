@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"squawk/internal/service"
 	"squawk/server"
-
-	"github.com/go-chi/chi/v5"
 )
 
 type Controller struct {
@@ -23,7 +21,5 @@ func (c *Controller) Connect(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Controller) SetupRoutes(server *server.Server) {
-	server.Mux.Route("/api/chat/v1", func(r chi.Router) {
-		r.Get("/ws", c.Connect)
-	})
+	server.Mux.HandleFunc("GET /api/chat/v1/ws", c.chatService.Connect)
 }
