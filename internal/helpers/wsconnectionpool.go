@@ -8,18 +8,16 @@ import (
 )
 
 type connectionPool struct {
-	connections    map[uuid.UUID]*models.WSConnection
-	broadcast      chan models.Message
-	saveConnection chan *models.WSConnection
-	unregister     chan uuid.UUID
+	connections map[uuid.UUID]*models.WSConnection
+	broadcast   chan models.Message
+	unregister  chan uuid.UUID
 }
 
 func newConnectionPool() *connectionPool {
 	return &connectionPool{
-		connections:    map[uuid.UUID]*models.WSConnection{},
-		broadcast:      make(chan models.Message),
-		saveConnection: make(chan *models.WSConnection),
-		unregister:     make(chan uuid.UUID),
+		connections: map[uuid.UUID]*models.WSConnection{},
+		broadcast:   make(chan models.Message),
+		unregister:  make(chan uuid.UUID),
 	}
 }
 
@@ -29,10 +27,6 @@ func (pool *connectionPool) Start() {
 
 	for {
 		select {
-
-		case conn := <-pool.saveConnection:
-			log.Printf("saving new connection %s", conn.ConnID)
-			pool.connections[conn.ConnID] = conn
 
 		case id := <-pool.unregister:
 			log.Printf("unregistering connection %s", id)
@@ -55,4 +49,8 @@ func (pool *connectionPool) Start() {
 			}
 		}
 	}
+}
+
+func (pool *connectionPool) SaveConn(conn *models.WSConnection) {
+	pool.connections[conn.ConnID] = conn
 }

@@ -47,23 +47,29 @@ func (ws *WebSocketImpl) HandleNewConnection(w http.ResponseWriter, r *http.Requ
 		Connection: wsConn,
 	}
 
-	ws.pool.saveConnection <- conn
-	go ws.ListenForChatMessages(connId, conn)
+	ws.pool.SaveConn(conn)
+	go ws.ListenForChatMessages(connId)
 	return nil
 }
 
-func (ws *WebSocketImpl) ListenForChatMessages(id uuid.UUID, conn *models.WSConnection) {
+func (ws *WebSocketImpl) ListenForChatMessages(connId uuid.UUID) {
 	// Close connection once the Liste For Chat Messages exits.
 	// This method is involked in its own long running go routine so the connection should close only if the go routien exits.
 	defer func() {
-		log.Printf("cleaning up connection %s", id)
+		log.Printf("cleaning up connection %s", connId)
 		if err := recover(); err != nil {
 			log.Printf("Panic occurred: %v", err)
 		}
-		ws.pool.unregister <- id
+		ws.pool.unregister <- connId
 	}()
 
-	log.Printf("Listening for chat messages on connection %s", id)
+	log.Printf("Listening for chat messages on connection %s", connId)
+
+	conn, ok := ws.pool.connections[connId]
+	if !ok {
+		log.Printf("connection not found in pool for id %s", connId)
+		return
+	}
 
 	for {
 		var msg models.Message
@@ -73,7 +79,7 @@ func (ws *WebSocketImpl) ListenForChatMessages(id uuid.UUID, conn *models.WSConn
 			break
 		}
 
-		msg.ConnID = id
+		msg.Sender = connId
 		ws.pool.broadcast <- msg
 	}
 }

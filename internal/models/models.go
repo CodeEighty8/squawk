@@ -12,7 +12,7 @@ type WSConnection struct {
 }
 
 type Message struct {
-	ConnID  uuid.UUID `json:"connID"`
-	Sender  string    `json:"sender"`
-	Content string    `json:"content"`
+	Sender   uuid.UUID `json:"sender"`
+	Receiver uuid.UUID `json:"receiver"`
+	Content  string    `json:"content"`
 }
