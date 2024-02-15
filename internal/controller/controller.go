@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"squawk/internal/errors"
 	"squawk/internal/service"
 	"squawk/server"
 )
@@ -17,9 +18,19 @@ func NewController(chatService service.IChatService) *Controller {
 }
 
 func (c *Controller) Connect(w http.ResponseWriter, r *http.Request) {
-	c.chatService.Connect(w, r)
+	if err := c.chatService.Connect(w, r); err != nil {
+
+		switch err.(type) {
+		case *errors.UUIDParseError:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		case *errors.WSUpgradeError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
 }
 
 func (c *Controller) SetupRoutes(server *server.Server) {
-	server.Mux.HandleFunc("GET /api/chat/v1/ws", c.chatService.Connect)
+	server.Mux.HandleFunc("GET /api/chat/v1/ws/{id}", c.Connect)
 }

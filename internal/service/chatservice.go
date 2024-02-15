@@ -6,7 +6,7 @@ import (
 )
 
 type IChatService interface {
-	Connect(http.ResponseWriter, *http.Request)
+	Connect(http.ResponseWriter, *http.Request) error
 }
 
 type ChatSercice struct {
@@ -19,6 +19,9 @@ func NewChatSercice(serviceContext *helpers.DI) IChatService {
 	}
 }
 
-func (c *ChatSercice) Connect(w http.ResponseWriter, r *http.Request) {
-	c.serviceContext.WebSocketAPI.HandleNewConnection(w, r)
+func (c *ChatSercice) Connect(w http.ResponseWriter, r *http.Request) error {
+	if err := c.serviceContext.WebSocketAPI.HandleNewConnection(w, r); err != nil {
+		return err
+	}
+	return nil
 }

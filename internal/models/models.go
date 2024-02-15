@@ -5,9 +5,10 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type Register struct {
-	ID     uuid.UUID
-	WSConn *websocket.Conn
+type WSConnection struct {
+	ConnID     uuid.UUID
+	UserName   string
+	Connection *websocket.Conn
 }
 
 type Message struct {
