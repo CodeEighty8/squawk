@@ -12,7 +12,7 @@ func Test_Default_AppConfig(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.Equal(t, &AppConfig{Name: "chat-app"}, appConfig)
-	assert.Equal(t, ServerConfig{Env: "dev", Port: 8080}, baseConfig.Server)
+	assert.Equal(t, ServerConfig{Env: "dev", Port: 5000}, baseConfig.Server)
 }
 
 func Test_Custom_AppConfig(t *testing.T) {
@@ -25,7 +25,7 @@ func Test_Custom_AppConfig(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.Equal(t, &AppConfig{Key: "value"}, appConfig)
-	assert.Equal(t, ServerConfig{Env: "dev", Port: 8080}, baseConfig.Server)
+	assert.Equal(t, ServerConfig{Env: "dev", Port: 5000}, baseConfig.Server)
 }
 
 func Test_Custom_AppConfig_Error(t *testing.T) {
